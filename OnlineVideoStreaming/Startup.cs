@@ -33,6 +33,13 @@ namespace OnlineVideoStreaming
                 )));
             services.AddControllersWithViews();
             services.AddScoped<IUserRepository  , SQLUserRepository>();
+            services.AddScoped<IVideoEntityRepository, SQLVideoRepository>();
+            services.AddMvc();
+            services.AddHttpContextAccessor();
+            services.Configure<IISServerOptions>(options =>
+            {
+                options.MaxRequestBodySize = Convert.ToInt64(2147483648)* Convert.ToInt64(1024);
+            });
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -52,7 +59,7 @@ namespace OnlineVideoStreaming
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            //app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

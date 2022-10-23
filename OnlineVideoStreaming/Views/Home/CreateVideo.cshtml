@@ -1,0 +1,23 @@
+﻿
+@model OnlineVideoStreaming.Models.VideoMeta
+
+@{
+    ViewData["Title"] = "CreateVideo";
+    var ChannelId = ViewData["ChannelId"];
+}
+
+<h1>Create Video Page</h1>
+
+<h1>ChannelId : @ChannelId</h1>
+<form method="post" enctype="multipart/form-data" asp-action="SubmitVideo" >
+
+    <label>video name : </label><input asp-for="VideoName" type="text" required />
+    <br />
+    <label>Description : </label><textarea asp-for="Description" type="text"></textarea>
+    <br />
+    <input type="file" asp-for="files" multiple/>
+    @*<input asp-for="Source" type="hidden" value="" required />*@
+    <br />
+    @*<input type="text" asp-for="UserId" value="@ChannelId" />*@
+    <button type="submit">Upload</button>
+</form>

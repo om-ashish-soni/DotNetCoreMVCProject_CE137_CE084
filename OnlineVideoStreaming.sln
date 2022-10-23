@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32901.82
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineVideoStreaming", "OnlineVideoStreaming\OnlineVideoStreaming.csproj", "{BFAA6322-E831-4087-88AB-59FDCFB82BFC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BFAA6322-E831-4087-88AB-59FDCFB82BFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFAA6322-E831-4087-88AB-59FDCFB82BFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFAA6322-E831-4087-88AB-59FDCFB82BFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFAA6322-E831-4087-88AB-59FDCFB82BFC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8AAC17B6-009E-4891-BA98-C98378D5BBC8}
+	EndGlobalSection
+EndGlobal

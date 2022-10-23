@@ -1,0 +1,23 @@
+﻿@model OnlineVideoStreaming.Models.User
+
+@{
+    ViewData["Title"] = "Login";
+    var error = ViewData["Error"];
+}
+
+<h1>Login</h1>
+
+<form asp-action="SubmitLogin">
+
+    <p>@error</p>
+    <label>Email : </label><input asp-for="Email" type="email" required />
+    <br />
+    <label>Password : </label><input asp-for="Password" type="password" required />
+    <br />
+    
+    <button type="submit">Login</button>
+</form>
+<form asp-action="Signin">
+
+    <button type="submit">Not a user? Sign in</button>
+</form>

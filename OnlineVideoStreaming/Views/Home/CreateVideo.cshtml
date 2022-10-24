@@ -6,18 +6,24 @@
     var ChannelId = ViewData["ChannelId"];
 }
 
-<h1>Create Video Page</h1>
+@*<h1>Create Video Page</h1>*@
 
-<h1>ChannelId : @ChannelId</h1>
-<form method="post" enctype="multipart/form-data" asp-action="SubmitVideo" >
+@*<h1>ChannelId : @ChannelId</h1>*@
 
-    <label>video name : </label><input asp-for="VideoName" type="text" required />
+<form method="post" enctype="multipart/form-data" asp-action="SubmitVideo" class="create-video-wrapper">
+    <center>
+        <heading>Create Video Page</heading>
+    </center>
+    <label>video name : </label>
+    <input class="label-input" asp-for="VideoName" type="text" required />
     <br />
-    <label>Description : </label><textarea asp-for="Description" type="text"></textarea>
-    <br />
-    <input type="file" asp-for="files" multiple/>
+    <label>select file : </label><input class="label-input" type="file" asp-for="files" multiple />
+    <br/>
+    <label>Description : </label><br/>
+    <textarea asp-for="Description" type="text"></textarea>
+    
     @*<input asp-for="Source" type="hidden" value="" required />*@
     <br />
     @*<input type="text" asp-for="UserId" value="@ChannelId" />*@
-    <button type="submit">Upload</button>
+    <button class="submit-btn" type="submit">Upload</button>
 </form>

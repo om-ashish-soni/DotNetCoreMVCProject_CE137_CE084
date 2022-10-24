@@ -23,23 +23,49 @@ namespace OnlineVideoStreaming.Controllers
             _accessor = accessor;
             _videoRepo = videoRepo;
         }
-
+        public Boolean SecureCheck()
+        {
+            var ChannelId = HttpContext.Request.Cookies["ChannelId"];
+            var Email = HttpContext.Request.Cookies["Email"];
+            if (ChannelId == null || Email == null)
+            {
+                return false;
+            }
+            return true;
+        }
         public IActionResult Index()
         {
             //string filename = "Ed Sheeran - Perfect (Official Music Video).mp4";
-            
-            var ChannelId = HttpContext.Request.Cookies["ChannelId"];
+
+            /*var ChannelId = HttpContext.Request.Cookies["ChannelId"];
             var Email = HttpContext.Request.Cookies["Email"];
             if(ChannelId != null && Email != null)
             {
                 return RenderHome();
-            }
-            
-            return View();
+            }*/
+            if (SecureCheck() == false) return RedirectToAction("Login");
+            return RedirectToAction("Home");
+        }
+        public IActionResult Home()
+        {
+            return RenderHome();
         }
         public IActionResult Login()
         {
             return View();
+        }
+        public IActionResult Search()
+        {
+            if (SecureCheck() == false) return RedirectToAction("Login");
+            List<Video> videoList = _videoRepo.GetAllVideos().ToList();
+            ViewData["VideoList"] = videoList;
+            return View();
+        }
+        public IActionResult Logout()
+        {
+            HttpContext.Response.Cookies.Delete("Email");
+            HttpContext.Response.Cookies.Delete("ChannelId");
+            return RedirectToAction("Login");
         }
         public IActionResult RenderHome()
         {
@@ -118,6 +144,7 @@ namespace OnlineVideoStreaming.Controllers
         }
         public IActionResult CreateVideo()
         {
+            if (SecureCheck() == false) return RedirectToAction("Login");
             var ChannelId = HttpContext.Request.Cookies["ChannelId"];
             ViewData["ChannelId"] = ChannelId;
             return View();
@@ -125,7 +152,7 @@ namespace OnlineVideoStreaming.Controllers
         [HttpPost]
         async public Task<IActionResult> SubmitVideo(VideoMeta videoMeta) 
         {
-
+            if (SecureCheck() == false) return RedirectToAction("Login");
             var ChannelIdStr = HttpContext.Request.Cookies["ChannelId"];
             if(ChannelIdStr == null)
             {
@@ -133,11 +160,19 @@ namespace OnlineVideoStreaming.Controllers
             }
 
             int ChannelId = Convert.ToInt32(ChannelIdStr);
+            User channel = _userRepo.GetUserById(ChannelId);
+            if (channel == null)
+            {
+
+                return RenderHome();
+
+            }
+
             Video video = new Video();
             video.UserId = ChannelId;
             video.VideoName = videoMeta.VideoName;
             video.Description = videoMeta.Description;
-
+            video.Channel = channel;
             
             string format = "Mddyyyyhhmmsstt";
             string filename = ChannelId.ToString() + "_" + video.VideoName + "_" + DateTime.Now.ToString(format) + ".mp4";
@@ -153,16 +188,75 @@ namespace OnlineVideoStreaming.Controllers
                 using (var stream = new FileStream(filepath, FileMode.Create))
                 {
                     await file.CopyToAsync(stream);
+                    break;
                 }
-                break;
             }
 
-            video.Source = filename;//add here
+            video.Source = "/"+filename;//add here
                                     // done upload
 
             Video newVideo = _videoRepo.Add(video);
             ViewData["Video"] = newVideo;
-            return View("ShowVideo");
+            return View("DisplayVideo");
+        }
+
+        
+        public IActionResult ShowVideo(int VideoId)
+        {
+            if (SecureCheck() == false) return RedirectToAction("Login");
+            return RenderVideo(VideoId,"DisplayVideo");
+        }
+        [HttpGet()]
+        public IActionResult DisplayVideo([FromQuery(Name = "VideoId")] int videoId)
+        {
+            if (SecureCheck() == false) return RedirectToAction("Login");
+            /*List<Video> videoList = _videoRepo.GetAllVideos().ToList();*/
+            Video video = _videoRepo.GetVideo(videoId);
+            /*video.Channel = _userRepo.GetUserById(video.UserId);
+            if (video == null)
+            {
+                return RenderHome();
+            }
+            ViewData["Video"] = video;
+            return View();*/
+            video.Views += 1;
+            _videoRepo.Update(video);
+            return RenderVideo(videoId, "DisplayVideo");
+        }
+        public IActionResult RenderVideo(int VideoId,string view)
+        {
+            
+            Video video = _videoRepo.GetVideo(VideoId);
+            if (video == null)
+            {
+                return RenderHome();
+            }
+            video.Channel = _userRepo.GetUserById(video.UserId);
+            ViewData["Video"] = video;
+            return View(view);
+        }
+        [HttpGet()]
+        public IActionResult LikeVideo([FromQuery(Name = "VideoId")] int videoId)
+        {
+            if (SecureCheck() == false) return RedirectToAction("Login");
+            Video video = _videoRepo.GetVideo(videoId);
+            if (video == null)
+            {
+                return RenderHome();
+            }
+            video.Likes += 1;
+            _videoRepo.Update(video);
+
+            //return RenderVideo(videoId,"DisplayVideo");
+            return RedirectToAction("ShowVideo", new { VideoId=videoId });
+        }
+        [HttpGet()]
+        public IActionResult SearchVideo([FromQuery(Name = "Pattern")] string Pattern)
+        {
+            if (SecureCheck() == false) return RedirectToAction("Login");
+            List<Video> videoList = _videoRepo.GetAllVideosByPattern(Pattern).ToList();
+            ViewData["VideoList"] = videoList;
+            return View("Search");
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

@@ -7,6 +7,7 @@ namespace OnlineVideoStreaming.Models
 {
    public interface IUserRepository
     {
+        User GetUserById(int id);
         User GetExistingUser(string Email);
         User GetUser(string Email,string Password);
         IEnumerable<User> GetAllUsers();

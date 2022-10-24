@@ -1,0 +1,64 @@
+﻿@model OnlineVideoStreaming.Models.Video
+
+@{
+    ViewData["Title"] = "Show Video";
+    Video video = ViewData["Video"] as Video;
+
+}
+
+
+
+
+
+
+
+    <div>
+    <div>
+
+        <div class="video-info-wrapper">
+            <hr />
+            <div class="video-name-wrapper">
+                <span class="video-name">@video.VideoName</span>
+            </div>
+            <div class="video-stat-wrapper">
+                <span class="video-stat">@video.Views views</span>
+                &nbsp;&nbsp;
+                <span class="video-stat">@video.Likes likes</span>
+                &nbsp;&nbsp;
+                <form asp-action="LikeVideo" method="get" class="like-form">
+                    <input type="hidden" name="VideoId" value="@video.Id" />
+                    <button class="like-btn" type="submit">Like</button>
+                </form>
+            </div>
+            <hr />
+        </div>
+
+    </div>
+        <div class="big-video-wrapper">
+            @*<iframe 
+                width="420"
+                height="240"
+                src="@video.Source"
+                frameborder="0"
+                allowfullscreen>
+            </iframe>*@
+            <iframe
+                class="big-video"
+                src="@video.Source"
+                frameborder="0"
+                allowfullscreen>
+            </iframe>
+        </div>
+        <br />
+        
+        <div>
+        
+        <p>
+            <hr/>
+            <label class="channel-heading">From : @video.Channel.ChannelName</label>
+            <br />
+            <hr />
+        </p>
+        </div>
+
+    </div>

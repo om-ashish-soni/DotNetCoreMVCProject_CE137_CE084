@@ -1,14 +1,44 @@
-﻿
+﻿@model OnlineVideoStreaming.Models.Video
 
 @{
-    ViewData["Title"] = "Signin";
-    //Video video = ViewData["Video"] as Video;
-    var filepath = ViewData["filepath"];
-    var filename = ViewData["filename"];
+    ViewData["Title"] = "Show Video";
+    List<Video> videoList = ViewData["VideoList"] as List<Video>;
+
 }
 
-<h1>Show Video</h1>
-<h3>@filepath</h3>
-<h3>@filename</h3>
 
-@*<h2>@video.Source</h2>*@
+
+
+
+@foreach (Video video in videoList)
+{
+
+
+    <div>
+
+        <div>
+            <iframe width="420"
+                height="240"
+                src="@video.Source"
+                frameborder="0"
+                allowfullscreen>
+            </iframe>
+            <br />
+            <p>
+                <span>@video.VideoName</span>
+                <br />
+                <span>@video.Likes likes</span>
+                &nbsp;&nbsp;
+                <span>@video.Views views</span>
+            </p>
+            <form asp-action="LikeVideo" method="get">
+                <input type="hidden" value="@video.Id" />
+                <button type="submit">Like</button>
+            </form>
+        </div>
+        <div>
+            <p>video</p>
+        </div>
+
+    </div>
+}

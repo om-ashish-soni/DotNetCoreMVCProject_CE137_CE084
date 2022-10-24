@@ -3,15 +3,213 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - OnlineVideoStreaming</title>
+    <title>@ViewData["Title"] - Video Community</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="shortcut icon" href="/logo.png" />
+    <style>
+        .nav-logo{
+            width:7%;
+            height:auto;
+            pointer-events: none;
+            position: relative;
+            animation: myfirst 10s infinite;
+            animation-direction: alternate;
+            border-radius:100%;
+        }
+
+        .nav-logo-static {
+            width: 7%;
+            height: auto;
+            pointer-events: none;
+            position: relative;
+            border-radius: 10%;
+        }
+        @@keyframes myfirst{
+          0% {left:0%;opacity:0.1;transform: rotate(360deg);}
+          16%{left:10%;opacity:0.2;transform: rotate(180deg);}
+          32% {left:60%;opacity:0.1;transform: rotate(0deg);}
+          48%{left:100%;opacity:0.6;transform: rotate(-180deg);}
+          64% {left:60%;opacity:0.2;transform: rotate(-360deg);}
+          80% {left:10%;opacity:0.1;transform: rotate(-360deg);}
+          100% {left:0%;opacity:0;transform: rotate(-360deg);}
+        }
+        /*.inner-wrapper{
+            margin:10%;
+        }
+        .outer-wrapper{
+            padding:10%;
+        }*/
+        .nav-elem{
+            cursor:pointer;
+            font-size:1.6vw;
+            color:inherit;
+        }
+        li{
+            margin-right:1.6%;
+            font-size:1.6vw;
+        }
+        li:hover{
+            
+            background-color:lightyellow;
+            color:white;
+            border-radius:20px;
+            
+        }
+        .nav-elem:hover{
+            color:tomato;
+        }
+
+        .video-wrapper-btn{
+            background-color:whitesmoke;
+            outline:none;
+            border:0;
+            border-radius:1vw;
+            float:left;
+            margin-bottom:20px;
+
+        }
+
+        .video-wrapper-btn:hover {
+            background-color: lightgoldenrodyellow;
+            
+        }
+
+        .video-wrapper-form{
+            
+            display:inline;
+            float:left;
+            margin:20px;
+            max-width:40%;
+            max-height:40%;
+        }
+        .create-video-wrapper{
+            font-size:2vw;
+            width:60%;
+            margin-left:20%;
+            
+        }
+        .label-input{
+            outline:none;
+            border:none;
+            border-bottom:1px solid black;
+            margin:2%;
+            min-width:68%;
+        }
+        textarea{
+            background-color:lightyellow;
+            width:100%;
+        }
+        .submit-btn{
+            background-color:tomato;
+            color:white;
+            outline:none;
+            border:none;
+            border-radius:2vw;
+            width:100%;
+            margin-top:2vw;
+        }
+        .video-name{
+            font-size:1.5vw;
+        }
+        .video-stats{
+            color: gray;
+        }
+        .search-wrapper{
+            margin-left:2%;
+            font-size:1.5vw;
+        }
+        .search-input{
+            min-width:70%;
+            
+        }
+        label{
+            min-width:20%;
+        }
+        .search-submit{
+            background-color:tomato;
+            color:white;
+            outline:none;
+            border:none;
+            border-radius:10px;
+            min-width:10%;
+            margin-left:2%;
+        }
+        .big-video-wrapper{
+            position: relative;
+            padding-bottom: 56.25%;
+            /* 16:9 */
+            padding-top: 25px;
+            height: 0;
+        }
+        .big-video{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .channel-heading{
+            font-size:2vw;
+            font-weight:600;
+            font-variant:small-caps;
+        }
+        .video-info-wrapper{
+            width:100%;
+        }
+        .video-stat-wrapper{
+            font-size:1.5vw;
+            font-variant: small-caps;
+            float:right;
+            display:inline;
+        }
+        .video-name-wrapper{
+            display: inline;
+            min-width:50%;
+        }
+        .video-name{
+            font-size: 2vw;
+            font-weight: 500;
+            font-variant: small-caps;
+        }        
+        .like-form{
+            display:inline;
+        }
+        .like-btn{
+            color: white;
+            background-color: tomato;
+            border: none;
+            outline: none;
+            border-radius: 5px;
+        }
+
+        .auth-wrapper {
+            font-size: 2vw;
+            width: 60%;
+            margin-left: 20%;
+        }
+        .error-text{
+            color:red;
+            font-size:1.5vw;
+            display:block;
+            margin-top: 2%;
+            margin-bottom: 2%;
+        }
+    </style>
 </head>
+
 <body>
+    
     <header>
+
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <img class="nav-logo" src="/logo.png" />
+            <img class="nav-logo-static" src="/logo.png" />
+            
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">OnlineVideoStreaming</a>
+                
+                <a class="nav-elem navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Video Community</a>
+                
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -19,10 +217,20 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-elem nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-elem nav-link text-dark" asp-area="" asp-controller="Home" asp-action="CreateVideo">Create Video</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-elem nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Search">Search</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-elem nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-elem nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">Logout</a>
                         </li>
                     </ul>
                 </div>
@@ -34,7 +242,9 @@
             @RenderBody()
         </main>
     </div>
-
+    <br/>
+    <br />
+    <br />
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2022 - OnlineVideoStreaming - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
@@ -44,5 +254,6 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
+    
 </body>
 </html>

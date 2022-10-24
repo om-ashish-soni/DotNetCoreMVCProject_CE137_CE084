@@ -9,6 +9,7 @@ namespace OnlineVideoStreaming.Models
     {
         Video GetVideo(int Id);
         IEnumerable<Video> GetAllVideos();
+        IEnumerable<Video> GetAllVideosByPattern(string Pattern);
         Video Add(Video Video);
         Video Update(Video VideoChanges);
         Video Delete(int Id);

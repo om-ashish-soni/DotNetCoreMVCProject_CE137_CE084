@@ -13,6 +13,10 @@ namespace OnlineVideoStreaming.Models
         {
             this.context = context;
         }
+        User IUserRepository.GetUserById(int id)
+        {
+            return context.Users.FirstOrDefault(m => m.Id == id);
+        }
         User IUserRepository.Add(User User)
         {
             context.Users.Add(User);

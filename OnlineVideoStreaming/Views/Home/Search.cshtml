@@ -1,0 +1,68 @@
+﻿@model OnlineVideoStreaming.Models.Video
+
+@{
+    ViewData["Title"] = "Create Video";
+    List<Video> videoList = ViewData["VideoList"] as List<Video>;
+}
+
+
+<form asp-action="SearchVideo" method="get" class="search-wrapper">
+    <input class="search-input" type="text" name="Pattern" placeholder="search" required/>
+    <button class="search-submit">Search</button>
+</form>
+
+
+
+@foreach (Video video in videoList)
+{
+
+
+    @*<form asp-action="DisplayVideo" method="get">
+        <input type="hidden" name="VideoId" value="@video.Id" />
+        <button type="submit">
+            <iframe width="420"
+                height="240"
+                src="@video.Source"
+                frameborder="0"
+                allowfullscreen>
+            </iframe>
+            <br />
+            <p>
+                <span>@video.VideoName</span>
+                <br />
+                <span>@video.Likes likes</span>
+                &nbsp;&nbsp;
+                <span>@video.Views views</span>
+            </p>
+            <p><b>@video.Channel</b></p>
+        </button>
+     
+
+    </form>*@
+    <form asp-action="DisplayVideo" method="get" class="video-wrapper-form">
+        <input type="hidden" name="VideoId" value="@video.Id" />
+        <button class="video-wrapper-btn" type="submit">
+            <iframe width="420"
+                height="240"
+                src="@video.Source"
+                frameborder="0"
+                allowfullscreen>
+            </iframe>
+
+
+            <br />
+            <p>
+                <span class="video-name">@video.VideoName</span>
+                <br />
+                <span class="video-stats">@video.Likes likes</span>
+                &nbsp;&nbsp;
+                <span class="video-stats">@video.Views views</span>
+            </p>
+            @*<p><b>@video.Channel</b></p>*@
+
+
+        </button>
+
+
+    </form>
+}

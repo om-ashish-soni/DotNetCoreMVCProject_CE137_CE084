@@ -1,40 +1,47 @@
 ﻿
-@model OnlineVideoStreaming.Models.User
+@model OnlineVideoStreaming.Models.Video
+
 @{
-    ViewData["Title"] = "Signin";
+    ViewData["Title"] = "Home";
     List<Video> videoList = ViewData["VideoList"] as List<Video>;
+    
 }
 
 
-<form asp-action="CreateVideo">
-    <button>create video</button>
+@*<form asp-action="CreateVideo">
+    <button>Create video</button>
 </form>
-<iframe width="560"
-        height="315"
-        src="~/my.mp4"
-        frameborder="0"
-        allowfullscreen>
-</iframe>
-<video src="~/my.mp4">
+*@
 
-</video>
+
 @foreach (Video video in videoList)
 {
-    <h1>@video.VideoName</h1>
-    <h2>@video.Source</h2>
-    <iframe width="560"
-                height="315"
+
+
+    <form asp-action="DisplayVideo" method="get" class="video-wrapper-form">
+        <input type="hidden" name="VideoId" value="@video.Id" />
+        <button class="video-wrapper-btn" type="submit">
+            <iframe width="420"
+                height="240"
                 src="@video.Source"
                 frameborder="0"
                 allowfullscreen>
+            </iframe>
 
-        </iframe>
-    <!--<video width="320" height="240" controls>-->
-    @*<source src="@video.Source" type="video/mp4">*@
-    <!--<source src="@video.Source" type="video/webm">
+            
+            <br/>
+            <p>
+            <span class="video-name">@video.VideoName</span>
+            <br/>
+            <span class="video-stats">@video.Likes likes</span>
+            &nbsp;&nbsp;
+            <span class="video-stats">@video.Views views</span>
+            </p>
+            @*<p><b>@video.Channel</b></p>*@
+            
 
-        Your browser does not support the video tag.
-    </video>-->
-    @*<video src="@video.Source" controls="true"></video>*@
-    <video autoplay controls src="@video.Source"></video>
+        </button>
+       
+
+    </form>
 }

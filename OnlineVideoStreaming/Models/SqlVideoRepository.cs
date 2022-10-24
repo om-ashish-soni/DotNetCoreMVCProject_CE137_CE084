@@ -35,6 +35,11 @@ namespace OnlineVideoStreaming.Models
             return context.Videos;
         }
 
+        IEnumerable<Video> IVideoEntityRepository.GetAllVideosByPattern(string Pattern)
+        {
+            return context.Videos.Where(m=>m.VideoName.ToLower().Contains(Pattern.ToLower()) || Pattern.ToLower().Contains(m.VideoName));
+        }
+
         Video IVideoEntityRepository.GetVideo(int id)
         {
             return context.Videos.FirstOrDefault(m => m.Id == id);

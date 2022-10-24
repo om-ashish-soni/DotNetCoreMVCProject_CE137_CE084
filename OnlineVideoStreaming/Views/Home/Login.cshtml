@@ -5,19 +5,26 @@
     var error = ViewData["Error"];
 }
 
-<h1>Login</h1>
+@*<h1>Login</h1>*@
 
-<form asp-action="SubmitLogin">
-
-    <p>@error</p>
-    <label>Email : </label><input asp-for="Email" type="email" required />
+<form asp-action="SubmitLogin" class="auth-wrapper">
+    <center>
+        <heading>Login Page</heading>
+    </center>
+    <p >
+    <center>
+            <span class="error-text"> @error</span>
+    </center>
+    </p>
+    <label>Email &nbsp;&nbsp;&nbsp;: </label><input class="label-input" asp-for="Email" type="email" required />
     <br />
-    <label>Password : </label><input asp-for="Password" type="password" required />
+    <label>Password : </label><input class="label-input" asp-for="Password" type="password" required />
     <br />
     
-    <button type="submit">Login</button>
+    <button class="submit-btn" type="submit">Login</button>
 </form>
-<form asp-action="Signin">
-
-    <button type="submit">Not a user? Sign in</button>
+<br/>
+<hr/>
+<form asp-action="Signin" class="auth-wrapper">
+    <button class="submit-btn switch-btn" type="submit">Not a user? Sign in</button>
 </form>
